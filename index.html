@@ -1,149 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+  <link rel="icon" href="./assets/logo.png">
   <title>Kalkulator BMI</title>
-  <link rel="stylesheet" href="./css/style.css">
-
-  <meta name="description" content="Kalkulator BMI sederhana untuk menghitung indeks massa tubuh Anda. Cari tahu berat badan ideal Anda untuk menjaga kesehatan tubuh.">
-  <meta name="keywords" content="kalkulator bmi, indeks massa tubuh, berat badan ideal, kesehatan tubuh">
-  <meta name="author" content="Hizkia Reppi">
-  <meta name="robots" content="index, follow">
 </head>
-<body>
-  <main>
-    <section id="home" class="container">
-      <header>
-        <h1 class="title">Kalkulator BMI</h1>
-        <p class="paragraph">
-          Berat badan ideal adalah impian semua orang. Tidak hanya memiliki bentuk tubuh yang menunjang penampilan, berat badan ideal juga menandakan kondisi tubuh yang sehat. Bagaimana denganmu? <br> Yuk, hitung sekarang di kalkulator BMI.
-        </p>
-      </header>
 
-      <div>
-        <h2>Hitung BMI Anda</h2>
-        <p>Isi form berikut untuk menghitung Indeks Massa Tubuh (BMI) Anda.</p>
+<body>
+  <header>
+    <h1>Kalkulator BMI</h1>
+    <br>
+    <p class="description">Gunakan kalkulator ini untuk memeriksa Indeks Massa Tubuh (IMT) dan cek apakah berat
+      badan
+      Anda ideal atau
+      tidak. Kalkulator akan memberi Anda gambaran tentang perbandingan berat dengan tinggi badan Anda. Yuk, hitung
+      sekarang di kalkulator BMI!</p>
+    <img src="./assets/bmi.png" alt="Kalkulator BMI" class="icon">
+  </header>
+
+  <!-- Container for calculator BMI -->
+  <div class="container">
+    <!-- Container for BMI form -->
+    <form action="index.html#result" class="question" onsubmit="submitForm(event)">
+      <div class="gender">
+        <p>Apa jenis kelamin Anda?</p>
+        <div class="gender-option">
+          <input type="radio" id="laki-laki" name="gender" value="Laki-laki" checked>
+          <label class="label" for="laki-laki">Laki - laki</label>
+
+          <input type="radio" id="perempuan" name="gender" value="Perempuan">
+          <label class="label" for="perempuan">Perempuan</label>
+        </div>
       </div>
-      <div>
-        <form id="form" class="form" aria-label="Kalkulator BMI">
-          <div>
-            <label class="form-label" for="gender">Jenis Kelamin</label>
-            <div class="input-group">
-              <input type="radio" name="gender" id="male" value="Pria" class="form-input-check" checked>
-              <label for="male">Pria</label>
-              <input type="radio" name="gender" id="female" value="Wanita" class="form-input-check">
-              <label for="female">Wanita</label>
-            </div>
-            <span id="genderErrorMessage" class="error-message"></span>
+      <div class="usia">
+        <p>Berapa usia kamu? (tahun)</p>
+        <div class="input-number">
+          <input type="number"
+            onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+            id="usia" name="usia" placeholder="20" min="0" value="25">
+          <div class="error">
+            <p id="usiaNull" class="">Usia harus diisi</p>
+            <p id="usiaRange">Usia harus diantara 2 dan 120</p>
           </div>
-          <div>
-            <label class="form-label" for="weight">Berat Badan</label>
-            <div class="input-group">
-              <span class="input-group-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                  <path
-                    d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z" />
-                </svg>
-              </span>
-              <input type="number" name="weight" id="weight" class="form-input" min="1" aria-describedby="weightDesc">
-              <span class="input-group-desc" id="weightDesc">Kg</span>
-            </div>
-            <span id="weightErrorMessage" class="error-message"></span>
-          </div>
-          <div>
-            <label class="form-label" for="age">Umur</label>
-            <div class="input-group">
-              <span class="input-group-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                  <path
-                    d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z" />
-                </svg>
-              </span>
-              <input type="number" name="age" id="age" class="form-input" min="1" aria-describedby="ageDesc">
-              <span class="input-group-desc" id="ageDesc">Tahun</span>
-            </div>
-            <span id="ageErrorMessage" class="error-message"></span>
-          </div>
-          <div>
-            <label class="form-label" for="height">Tinggi Badan</label>
-            <div class="input-group">
-              <span class="input-group-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-                  <path
-                    d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z" />
-                </svg>
-              </span>
-              <input type="number" name="height" id="height" class="form-input" min="1" aria-describedby="heightDesc">
-              <span class="input-group-desc" id="heightDesc">Cm</span>
-            </div>
-            <span id="heightErrorMessage" class="error-message"></span>
-          </div>
-          <div>
-            <button type="button" class="btn" onclick="checkBMI()">Hitung BMI</button>
-            <button type="reset" class="btn btn-reset">Reset</button>
-          </div>
-        </form>
+        </div>
       </div>
-      <div class="mb-1">
-        <h3 class="sub-title">Keunggulan fitur</h3>
-        <ol class="features">
+      <div class="berat">
+        <p>Berapa berat kamu? (kg)</p>
+        <div class="input-number">
+          <input type="number"
+            onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+            id="berat" name="berat" placeholder="60" value="55">
+          <div class="error">
+            <p id="beratNull">Berat badan harus diisi</p>
+            <p id="beratRange">Berat badan harus diantara 3 dan 600</p>
+          </div>
+        </div>
+      </div>
+      <div class="tinggi">
+        <p>Berapa tinggi kamu? (cm)</p>
+        <div class="input-number">
+          <input type="number" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 &&
+        event.charCode <= 57))" id="tinggi" name="tinggi" placeholder="170" value="172">
+          <div class="error">
+            <p id="tinggiNull">Tinggi badan harus diisi</p>
+            <p id="tinggiRange">Tinggi badan harus diantara 40 dan 300</p>
+          </div>
+        </div>
+      </div>
+
+      <input type="submit" class="submit" value="Hitung BMI">
+      <input type="reset" class="reset" value="Reset">
+    </form>
+
+    <!-- Container for result -->
+    <div id="result" class="result">
+      <h2>Hasil Perhitungan BMI</h2>
+      <p><span name="answer">Laki - laki</span> usia <span name="answer">25</span> tahun</p>
+      <p>berat <span name="answer">55</span> kg dan tinggi <span name="answer">172</span> cm</p>
+      <p>BMI kamu :</p>
+      <p id="bmi-result">18.6</p>
+      <h3 id="kategori-bmi">Berat ideal</h3>
+      <p id="deskripsi-bmi">Pertahankan pola makan saat ini dan akukan aktivitas fisik 3 kali dalam seminggu agar tubuh
+        tetap dalam kondisi optimal</p>
+      <br>
+      <a class="konsultasi"
+        href="https://www.halodoc.com/tanya-dokter/cari?source=com.halodoc.bmicalculator&category_id=426fb851-f268-4332-8aa3-52c0ff78c27f&category_name=Ahli%20Gizi"
+        target="_blank">Konsultasi
+        Ahli Gizi</a>
+    </div>
+  </div>
+
+  <!-- Container for informasi-->
+  <div class="info">
+    <div id="informasi-tambahan">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+        style="height: 2rem; color: blue;">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+      </svg>
+      <p>Informasi tambahan</p>
+    </div>
+
+    <!-- Pertanyaan pertama -->
+    <div>
+      <div onclick="rotate(0)" class="info-question">
+        <p> Apa itu BMI (Body Mass Index)?</p>
+        <div class="arrow" style="display: flex; justify-content: space-between; align-items: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" style="height: 1.5rem;">
+            <path stroke-linecap=" round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+      </div>
+      <div class="info-answer">
+        <p>
+          BMI adalah indikator pengukuran yang digunakan untuk menentukan kategori berat badan ideal atau tidak. Metode
+          ini dikembangkan oleh Adolphe Quetelet selama abad ke-19. Melalui hasil perhitungan BMI, kamu akan mengetahui
+          kategori berat badan kamu, apakah kurus, ideal, berlebihan, atau bahkan obesitas. Disisi lain, BMI juga bisa
+          menjadi alat skrining awal untuk melihat risiko kesehatan tertentu. Menurut WHO, hasil BMI yang tidak
+          normal/ideal akan meningkatkan risiko terkena penyakit.
+        </p>
+      </div>
+    </div>
+
+    <!-- Pertanyaan kedua -->
+    <div>
+      <div onclick="rotate(1)" class="info-question">
+        <p> Bagaimana BMI dihitung?</p>
+        <div class="arrow" style="display: flex; justify-content: space-between; align-items: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" style="height: 1.5rem;">
+            <path stroke-linecap=" round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+      </div>
+      <div class="info-answer">
+        <p>
+          Cara menghitung BMI cukup simpel, yaitu dengan membagi berat badan (dalam satuan kilogram) dan tinggi badan
+          (dalam satuan meter kuadrat). Rumus BMI = berat badan (kg) : (tinggi badan (m))<sup>2</sup>
+        </p>
+        <p>
+          Dari hasil perhitungan BMI tersebut, kamu bisa membandingkannya ke dalam standar kategori berat tubuh wanita
+          maupun pria. Menurut WHO, pengelompokkan BMI adalah sebagai berikut.
+        </p>
+        <ul>
+          <li>Berat badan di bawah normal jika angka BMI di bawah 18,5</li>
+          <li>Berat badan normal jika angka BMI di antara 18,5 s.d 24,9.</li>
+          <li>Berat badan berlebih jika angka BMI di antara 25 s.d 29,9</li>
+          <li>Obesitas jika angka BMI adalah 30 atau lebih.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pertanyaan ketiga -->
+    <div>
+      <div onclick="rotate(2)" class="info-question">
+        <p> Apa manfaat dari menghitung BMI?</p>
+        <div class="arrow" style="display: flex; justify-content: space-between; align-items: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" style="height: 1.5rem;">
+            <path stroke-linecap=" round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+      </div>
+      <div class="info-answer">
+        <p>Manfaat menghitung BMI antara lain:</p>
+        <ol class="message" id="message" style="margin: 0">
           <li>Menghitung berat badan</li>
           <li>Menentukan kategori berat badan ideal atau tidak</li>
-          <li>Mempersiapkan program penurunan berat badan</li>
+          <li>Mempersiapkan program penurunan atau peningkatan berat badan</li>
         </ol>
-      </div>
-      <div>
-        <p class="paragraph mb-1">
-          Kalkulator ini hanya boleh digunakan oleh orang dewasa (wanita hamil atau menyusui tidak boleh mengandalkan pembacaan BMI ini) dan tidak ada tindakan yang harus diambil berdasarkan nilainya selain berkonsultasi dengan orang yang memenuhi syarat seperti dokter.
-        </p>
-        <p class="paragraph">
-          Kalkulator akan memberi anda gambaran tentang perbandingan berat badan anda dengan nilai umum. Indek Massa Tubuh (atau BMI) dihitung sebagai berat badan anda (dalam kilogram) dibagi dengan kuadrat tinggi badan anda (dalam meter) atau BMI = Kg/M<sup>2</sup>.
-        </p>
-      </div>
-    </section>
-
-    <section id="result" class="container d-hidden">
-      <h2 class="title">Hasil</h2>
-      <div class="sub-container mb-1">
-        <h3 id="result-title" class="result-title"></h3>
-        <div id="result-bmi" class="result-bmi"></div>
-        <p id="result-desc" class="result-desc"></p>
-        <button class="btn">Download Hasil BMI</button>
-      </div>
-      <div class="mb-1 paragraph">
-        <p id="result-text"></p>
-        <p id="suggestion-text"></p>
-        <p id="advice-text"></p>
-        <div class="button-cta">
-          <button class="btn">Konsultasi Ahli Gizi Via Aplikasi</button>
-          <button class="btn">Registrasi Online Ahli Gizi</button>
-        </div>
         <p>
-          BMI tidak sepenuhnya mewakili diagnosis menyeluruh dari kesehatan tubuh dan resiko penyakit seseorang, Anda perlu konsultasi lebih lanjut mengenai resiko dan kekhawatiran Anda terkait dengan berat badan Anda.
+          BMI yang ideal umumnya mengarah pada kualitas hidup yang lebih bahagia dan lebih sehat. Sementara BMI yang
+          tinggi berkaitan erat dengan risiko penyakit seperti diabetes tipe 2, penyakit jantung, dan tekanan darah
+          tinggi. Mengetahui BMI berarti memberi pertimbangan bagi kamu dan tenaga kesehatan dalam mengambil keputusan
+          mengenai kondisi kesehatan tubuh kamu.
         </p>
       </div>
-      <div class="sub-container paragraph">
-        <h6 id="risk-title"></h6>
-        <ul id="list-risk" class="list-risk"></ul>
-        <div class="button-cta">
-          <button class="btn">Konsultasi Dokter Via Aplikasi</button>
-          <button class="btn">Registrasi Online Sekarang</button>
-        </div>
-      </div>
-      <div class="download-app">
-        <h6>Download Aplikasi</h6>
-        <div class="button-cta">
-          <img src="./img/google-play.png" alt="Google Play" class="img" aria-label="Download di Google Play">
-          <img src="./img/apple-store.jpg" alt="Apple Store" class="img" aria-label="Download di Apple Store">
-        </div>
-      </div>
-      <div>
-        <button class="btn" onclick="regenerateBMI()">Hitung Lagi</button>
-      </div>
-    </section>
-  </main>
+    </div>
+  </div>
 
-  <script src="./js/script.js"></script>
+  <footer>
+    <div class="social-media">
+      <p>Join me on social media</p>
+      <div class="sosmed-icon">
+        <a href="https://www.linkedin.com/in/dewanto-surya-setyoadji-5b245116b?originalSubdomain=id" target="_blank">
+          <img src="./assets/linkedin-icon.png">
+        </a>
+        <a href="https://www.instagram.com/dsetyoadji/" target="_blank">
+          <img src="./assets/instagram-icon.png">
+        </a>
+      </div>
+    </div>
+    <div class="made-by">
+      <p>
+        2023 - Dewanto Surya Setyoadji
+      </p>
+    </div>
+  </footer>
 </body>
+
+<script src="./js/script.js"></script>
+
 </html>
